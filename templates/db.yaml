@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  labels:
+    name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: db
+  template:
+    metadata:
+      labels:
+        name: db
+    spec:
+      containers:
+        - name: db
+          image: postgres:13-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: tutorial-dev
+            - name: POSTGRES_USER
+              value: vinhle
+            - name: POSTGRES_PASSWORD
+              value: password
+          volumeMounts:
+            - name: db-vol
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db-vol
+          persistentVolumeClaim:
+            claimName: mypvc

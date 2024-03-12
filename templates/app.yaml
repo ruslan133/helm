@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: app
+  labels: 
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: app
+  template:
+    metadata:
+      labels:
+        name: app
+    spec:
+      containers:
+        - name: app
+          image: {{ .Values.app_image }}
+          ports: 
+            - containerPort: 3003
+          env:
+            - name: DB_HOST
+              value: db
+            - name: DB_NAME
+              value: tutorial-dev
+            - name: DB_USER
+              value: vinhle
+            - name: DB_PASS
+              value: password
+          command: ["/bin/sh"]
+          args: [ "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:3003"]
