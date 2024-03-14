@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: my-storageclass
   local:
-    path: /home/ubuntu/kuber/pvlocal
+    path: /home/admin/kuber/pvlocal
   nodeAffinity:
     required:
       nodeSelectorTerms:
